@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>粉丝留言墙</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet">
+
+  <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Noto Sans SC', 'ZCOOL KuaiLe', sans-serif;
+        background: linear-gradient(to bottom, #D0F0FF, #ffffff);
+        color: #333;
+        padding-bottom: 120px;
+      }
+
+      /* 导航栏 */
+      nav.navigation {
+        width: 100%;
+        background-color: #e3f6ff;
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        padding: 16px 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      nav.navigation a {
+        text-decoration: none;
+        font-weight: bold;
+        color: #2D5B8A;
+        font-size: 1rem;
+        padding: 6px 10px;
+        border-radius: 8px;
+      }
+
+      nav.navigation a:hover {
+        background-color: #b6e6fa;
+        color: #000;
+      }
+
+      /* 标题 */
+      h2 {
+        text-align: center;
+        font-size: 2rem;
+        margin: 40px 0 20px;
+        color: #2D5B8A;
+      }
+
+      /* 留言输入区 */
+      div input, div button {
+        padding: 10px 16px;
+        border-radius: 8px;
+        border: 1px solid #aadcee;
+        font-size: 1rem;
+      }
+
+      div input {
+        width: 60%;
+        max-width: 400px;
+        margin-right: 10px;
+      }
+
+      div button {
+        background-color: #aadcee;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      div button:hover {
+        background-color: #88cce6;
+      }
+
+      /* 留言墙 */
+      #wall {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 0 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      /* 留言气泡 */
+      .message {
+        background: #ffffff;
+        border-left: 6px solid #aadcee;
+        padding: 16px 20px;
+        border-radius: 14px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        position: relative;
+        word-break: break-word;
+      }
+
+      .message .text {
+        font-size: 1rem;
+      }
+
+      .message .actions {
+        margin-top: 8px;
+      }
+
+      .message .actions button {
+        font-size: 0.9rem;
+        margin-right: 8px;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 6px;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .message .actions button:nth-child(1) {
+        background-color: #57b1dc; /* 编辑按钮：浅蓝 */
+      }
+
+      .message .actions button:nth-child(1):hover {
+        background-color: #409cc9;
+      }
+
+      .message .actions button:nth-child(2) {
+        background-color: #f48b8b; /* 删除按钮：温柔红 */
+      }
+
+      .message .actions button:nth-child(2):hover {
+        background-color: #e25f5f;
+      }
+
+
+      /* 页脚 */
+      footer {
+        position: relative;
+        background-color: #AEDFF7;
+        color: #fff;
+        padding: 30px 20px;
+        text-align: center;
+        font-family: 'ZCOOL KuaiLe', cursive;
+        box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+      }
+
+      footer a {
+        color: #fff;
+        text-decoration: underline;
+        font-weight: bold;
+      }
+
+      /* 小困熊角标 */
+      .kunbear-icon {
+        position: fixed;
+        bottom: 20px;
+        right: 24px;
+        font-size: 2.5rem;
+        opacity: 0.75;
+        z-index: 9999;
+        pointer-events: none;
+      }
+
+  </style>
+</head>
+<body>
+<nav class="navigation">
+    <a href="index.html">主页</a>
+    <a href="information.html">介绍</a>
+    <a href="timeline.html">生涯</a>
+    <a href="fan-wall.html">留言墙</a>
+</nav>
+<h2>💬 粉丝留言墙</h2>
+
+<div>
+  <input id="content" placeholder="说点什么..." />
+  <button onclick="addMessage()">提交留言</button>
+</div>
+
+<div id="wall"></div>
+<div class="kunbear-icon">🐻</div>
+
+<script>
+const wall = document.getElementById('wall');
+const LOCAL_KEY = 'messages';
+const OWNER_KEY = 'myMessageIds';
+
+function loadMessages() {
+  const messages = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
+  messages.forEach(renderMessage);
+}
+
+function saveMessages(messages) {
+  localStorage.setItem(LOCAL_KEY, JSON.stringify(messages));
+}
+
+function getOwnerIds() {
+  return JSON.parse(localStorage.getItem(OWNER_KEY) || '[]');
+}
+
+function saveOwnerId(id) {
+  const ids = getOwnerIds();
+  ids.push(id);
+  localStorage.setItem(OWNER_KEY, JSON.stringify(ids));
+}
+
+function isOwner(id) {
+  return getOwnerIds().includes(id);
+}
+
+function addMessage() {
+  const content = document.getElementById('content').value.trim();
+  if (!content) return alert('请填写留言内容');
+
+  const id = Date.now(); // 唯一ID
+  const messageData = { id, content };
+  const messages = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
+  messages.push(messageData);
+  saveMessages(messages);
+  saveOwnerId(id);
+  renderMessage(messageData);
+  document.getElementById('content').value = '';
+}
+
+function renderMessage({ id, content }) {
+  const msg = document.createElement('div');
+  msg.className = 'message';
+  msg.dataset.id = id;
+  msg.innerHTML = `
+    <span class="text">${content}</span><br>
+    <span class="actions"></span>
+  `;
+  if (isOwner(id)) {
+    const actions = msg.querySelector('.actions');
+    actions.innerHTML = `
+      <button onclick="editMessage(${id})">编辑</button>
+      <button onclick="deleteMessage(${id})">删除</button>
+    `;
+  }
+  wall.prepend(msg);
+}
+
+function deleteMessage(id) {
+  const messages = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
+  const newMessages = messages.filter(m => m.id !== id);
+  saveMessages(newMessages);
+  document.querySelector(`[data-id='${id}']`)?.remove();
+}
+
+function editMessage(id) {
+  const div = document.querySelector(`[data-id='${id}']`);
+  const textEl = div.querySelector('.text');
+  const newText = prompt("修改留言内容：", textEl.textContent);
+  if (newText) {
+    textEl.textContent = newText;
+    // 更新 storage
+    const messages = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
+    const target = messages.find(m => m.id === id);
+    if (target) {
+      target.content = newText;
+      saveMessages(messages);
+    }
+  }
+}
+
+// 加载页面
+loadMessages();
+
+</script>
+
+</body>
+<footer>
+    <h5>更多关于我的故事 : </h5>
+    <a href="https://www.douyin.com/user/MS4wLjABAAAAD0F67hqqXVuvTi_S_wUeo602xYtX3zyoKqHZdAD9w1FIKJ_Df35hQ8ibG8dnWoDQ">我的主页</a>
+</footer>
+</html>
