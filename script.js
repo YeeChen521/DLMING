@@ -1,50 +1,32 @@
-window.onload = () => {
-  const gallery = document.getElementById("gallery");
+let currentSlide = 0;
+const gallery = document.querySelector(".gallery");
+const images = document.querySelectorAll(".gallery .img");
 
-  if (!gallery) {
-    console.error("Gallery element not found!");
-    return;
-  }
+const imageWidth = images[0].clientWidth + 20; // 图片宽度 + margin（10px * 2）
+const imagesPerView = Math.floor(window.innerWidth / imageWidth);
+const totalSlides = Math.ceil(images.length / imagesPerView);
 
-  // 复制内容实现无缝循环
-  gallery.innerHTML += gallery.innerHTML;
+function goToSlide(index) {
+  currentSlide = index;
+  gallery.style.transform = `translateX(-${imageWidth * imagesPerView * index}px)`;
+}
 
-  let position = 0;
-  let direction = 0; // 1 表示右，-1 表示左，0 表示停止
-  const speed = 5; // 速度调节，值越小越慢
+function goLeft() {
+  const newIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+  goToSlide(newIndex);
+}
 
-  const galleryWidth = gallery.scrollWidth / 2;
+function goRight() {
+  const newIndex = (currentSlide + 1) % totalSlides;
+  goToSlide(newIndex);
+}
 
-  function scrollGallery() {
-    if (direction !== 0) {
-      position -= direction * speed;
+document.querySelector(".left").addEventListener("click", goLeft);
+document.querySelector(".right").addEventListener("click", goRight);
 
-      if (position <= -galleryWidth) {
-        position += galleryWidth;
-      } else if (position >= 0) {
-        position -= galleryWidth;
-      }
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowLeft") goLeft();
+  if (e.key === "ArrowRight") goRight();
+});
 
-      gallery.style.transform = `translateX(${position}px)`;
-    }
-    requestAnimationFrame(scrollGallery);
-  }
-
-  // 监听键盘按下，控制方向
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowRight") {
-      direction = 1;
-    } else if (event.key === "ArrowLeft") {
-      direction = -1;
-    }
-  });
-
-  // 监听键盘松开，停止移动
-  document.addEventListener("keyup", (event) => {
-    if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
-      direction = 0;
-    }
-  });
-
-  scrollGallery();
-};
+setInterval(goRight, 5000);

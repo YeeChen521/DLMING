@@ -7,20 +7,20 @@
 
 /* Fonts */
 body {
-  font-family: 'Noto Sans SC', 'ZCOOL KuaiLe', sans-serif;
-  background-color: #D0F0FF; /* 主浅蓝色背景 */
+  font-family: "Noto Sans SC", "ZCOOL KuaiLe", sans-serif;
+  background-color: #d0f0ff; /* 主浅蓝色背景 */
   color: #333;
   line-height: 1.6;
 }
 
 header.name {
-  background-color: #AEDFF7;
+  background-color: #aedff7;
   padding: 20px;
   text-align: center;
-  font-family: 'ZCOOL KuaiLe', cursive;
+  font-family: "ZCOOL KuaiLe", cursive;
   font-size: 2.5rem;
   color: #fff;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -35,13 +35,13 @@ nav.navigation {
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(10px);
   padding: 10px 0;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 nav.navigation a {
   text-decoration: none;
   font-weight: bold;
-  color: #2D5B8A;
+  color: #2d5b8a;
   padding: 5px 10px;
   border-radius: 8px;
   transition: all 0.3s ease;
@@ -61,13 +61,12 @@ nav.navigation a:hover {
   border-bottom: 2px solid #aadcee;
   margin-top: 20px;
   background-color: #f5fcff;
+  position: relative; /* 让箭头可以定位 */
 }
 
 .gallery {
   display: flex;
-  flex-wrap: nowrap;
-  white-space: nowrap;
-  transition: transform 0.3s ease;
+  transition: transform 0.5s ease;
 }
 
 .gallery img {
@@ -75,7 +74,7 @@ nav.navigation a:hover {
   height: 260px;
   margin: 10px;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  flex-shrink: 0;
 }
 
 /* 可选：小困熊图标角标 */
@@ -88,6 +87,47 @@ body::after {
   opacity: 0.6;
 }
 
+button.left,
+button.right {
+  background-color: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover and focus states */
+button.left:hover,
+button.right:hover,
+button.left:focus,
+button.right:focus {
+  background-color: rgba(0, 0, 0, 0.8);
+  outline: none;
+  transform: scale(1.05);
+}
+
+button.left {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+}
+
+button.right {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+}
+
 /* 响应式优化 */
 @media (max-width: 768px) {
   nav.navigation {
@@ -98,4 +138,3 @@ body::after {
     height: 200px;
   }
 }
-
