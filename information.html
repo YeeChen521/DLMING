@@ -1,99 +1,99 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>DL.明</title>
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DL.明</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=ZCOOL+KuaiLe&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        /* 通用重置和字体 */
-        * {
+      * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        }
+      }
 
-        body.information {
-        font-family: 'Noto Sans SC', 'ZCOOL KuaiLe', sans-serif;
-        background: linear-gradient(to bottom, #D0F0FF, #ffffff);
+      body.information {
+        font-family: "Noto Sans SC", "ZCOOL KuaiLe", sans-serif;
+        background: linear-gradient(to bottom, #d0f0ff, #ffffff);
         color: #333;
         line-height: 1.6;
         padding-bottom: 120px;
-        }
+      }
 
-        /* 顶部导航栏 */
-        nav.navigation {
+      nav.navigation {
         width: 100%;
         background-color: #e3f6ff;
         display: flex;
         justify-content: center;
         gap: 40px;
         padding: 16px 0;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         position: sticky;
         top: 0;
         z-index: 100;
-        }
+      }
 
-        nav.navigation a {
+      nav.navigation a {
         text-decoration: none;
         font-weight: bold;
-        color: #2D5B8A;
+        color: #2d5b8a;
         font-size: 1rem;
         padding: 6px 10px;
         border-radius: 8px;
-        }
+      }
 
-        nav.navigation a:hover {
+      nav.navigation a:hover {
         background-color: #b6e6fa;
         color: #000;
-        }
+      }
 
-        /* 主卡片区 */
-        .postcard {
+      .postcard {
         max-width: 900px;
         margin: 60px auto;
         background: #fff;
         border-radius: 20px;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         padding: 40px;
         gap: 40px;
-        }
+      }
 
-        /* 头像 */
-        .avatar img {
+      .avatar img {
         width: 180px;
         height: 180px;
         object-fit: cover;
         border-radius: 50%;
         border: 4px solid #aadcee;
-        }
+      }
 
-        /* 信息区 */
-        .personal-info {
+      .personal-info {
         flex: 1;
         display: flex;
         flex-direction: column;
         gap: 12px;
-        }
+      }
 
-        .personal-info .info {
+      .personal-info .info {
         font-size: 1rem;
         color: #444;
-        }
+      }
 
-        .personal-info .info strong {
-        color: #2D5B8A;
-        }
+      .personal-info .info strong {
+        color: #2d5b8a;
+      }
 
-        /* 其他区域 */
-        .other {
+      .other {
         max-width: 900px;
         margin: 30px auto;
         padding: 0 20px;
@@ -101,50 +101,77 @@
         flex-wrap: wrap;
         gap: 40px;
         justify-content: center;
-        }
+      }
 
-        .about-me, .skills {
+      .about-me,
+      .skills {
         flex: 1 1 300px;
         background: #ffffff;
         border-radius: 16px;
         padding: 24px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      }
 
-        h2 {
-        color: #2D5B8A;
+      h2 {
+        color: #2d5b8a;
         margin-bottom: 16px;
-        }
+      }
 
-        ul.skill {
-        list-style-type: '🧸 ';
+      ul.skill {
+        list-style-type: "🧸 ";
         padding-left: 20px;
-        }
+      }
 
-        ul.skill li {
+      ul.skill li {
         margin-bottom: 8px;
         font-size: 1rem;
-        }
+      }
 
-        /* 页脚 */
-        footer {
+      .honours {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 24px;
+        background-color: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      }
+
+      .honours h2 {
+        color: #2d5b8a;
+        margin-bottom: 16px;
+        font-family: "ZCOOL KuaiLe", cursive;
+        font-size: 1.6rem;
+        text-align: center;
+      }
+
+      ul.honour {
+        list-style-type: "🏆 ";
+        padding-left: 20px;
+      }
+
+      ul.honour li {
+        font-size: 1rem;
+        margin-bottom: 10px;
+        color: #444;
+      }
+
+      footer {
         position: relative;
-        background-color: #AEDFF7;
+        background-color: #aedff7;
         color: #fff;
         padding: 30px 20px;
         text-align: center;
-        font-family: 'ZCOOL KuaiLe', cursive;
-        box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-        }
+        font-family: "ZCOOL KuaiLe", cursive;
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+      }
 
-        footer a {
+      footer a {
         color: #fff;
         text-decoration: underline;
         font-weight: bold;
-        }
+      }
 
-        /* 小困熊角标 */
-        .kunbear-icon {
+      .kunbear-icon {
         position: fixed;
         bottom: 20px;
         right: 24px;
@@ -152,69 +179,98 @@
         opacity: 0.75;
         z-index: 9999;
         pointer-events: none;
-        }
+      }
 
-        /* 响应式适配 */
-        @media (max-width: 768px) {
+      @media (max-width: 768px) {
         .postcard {
-            flex-direction: column;
-            align-items: center;
+          flex-direction: column;
+          align-items: center;
         }
 
         .personal-info {
-            align-items: center;
+          align-items: center;
         }
 
         .personal-info .info {
-            text-align: center;
+          text-align: center;
         }
-        }
-
+      }
     </style>
-    </head>
-    <body class="information">
-        <nav class="navigation">
-            <a href="index.html">主页</a>
-            <a href="information.html">介绍</a>
-            <a href="timeline.html">生涯</a>
-            <a href="fan-wall.html">留言墙</a>
-        </nav>
-        <div class="postcard">
-            <div class="avatar">
-                <img src="gallery/avatar.jpg" alt="大头照">
-            </div>
-            <div class="personal-info">
-                <p class="info"><strong>姓名</strong> : DL.明</p>
-                <p class="info"><strong>年龄</strong> : 2007 / 06 / 30 (自认为00后) </p>
-                <p class="info"><strong>工地</strong> : 顶流社</p>
-                <p class="info"><strong>抖音号</strong> : Suk0630</p>
-                <p class="info"><strong>粉丝名称</strong> : 小困熊 🧸</p>
-                <p class="info"><strong>动物塑</strong> : 鸭子</p>
-                <p class="info"><strong>昵称</strong> : 帅哥，七彩吞天巨蟒, 刚子, 谢小明等等</p>
-                <p class="info"><strong>网易云/微博</strong> : DL.明</p>
-            </div>
-        </div>
-        <div class="other">
-            <div class="about-me">
-                <h2>关于我的故事：</h2>
-                <p>大家好，我是DL.明，隶属于抖音顶流社的主播团队。我是一个搞笑男，所以我更喜欢用幽默和真诚与大家互动，分享有趣的直播内容和生活点滴。无论是游戏竞技、日常闲聊，还是精彩活动，我都希望通过直播带给大家欢乐和温暖。感谢每一位支持我的粉丝，你们是我前进的动力！期待在直播间和你们相见，继续创造更多美好回忆！</p>
-            </div>
-            <div class="skills">
-                <h2>特长 :</h2>
-                <ul class="skill">
-                    <li>说唱</li>
-                    <li>唱歌</li>
-                    <li>搞笑</li>
-                    <li>游戏</li>
-                </ul>
-            </div>
-        </div>
-        <div class="kunbear-icon">🐻</div>
-    </body>
-    <footer>
-        <h5>更多关于我的故事 : </h5>
-        <a href="https://www.douyin.com/user/MS4wLjABAAAAD0F67hqqXVuvTi_S_wUeo602xYtX3zyoKqHZdAD9w1FIKJ_Df35hQ8ibG8dnWoDQ">我的主页</a>
-        <a href="https://m.weibo.cn/u/7974360616?t=0&luicode=10000011&lfid=231583">微博</a>
-        <a href="https://m.weibo.cn/p/index?containerid=10080822360fbe73d9d00c8847859a83816acb&luicode=10000011&lfid=231583">超话</a>
-    </footer>
+  </head>
+  <body class="information">
+    <nav class="navigation">
+      <a href="index.html">主页</a>
+      <a href="information.html">介绍</a>
+      <a href="timeline.html">生涯</a>
+      <a href="fan-wall.html">留言墙</a>
+    </nav>
+    <div class="postcard">
+      <div class="avatar">
+        <img src="gallery/avatar.jpg" alt="大头照" />
+      </div>
+      <div class="personal-info">
+        <p class="info"><strong>姓名</strong> : DL.明</p>
+        <p class="info"><strong>年龄</strong> : 2007 / 06 / 30 (自认为00后)</p>
+        <p class="info"><strong>工地</strong> : 顶流社</p>
+        <p class="info"><strong>抖音号</strong> : Suk0630</p>
+        <p class="info"><strong>粉丝名称</strong> : 小困熊 🧸</p>
+        <p class="info"><strong>动物塑</strong> : 鸭子</p>
+        <p class="info">
+          <strong>昵称</strong> : 帅哥，七彩吞天巨蟒, 刚子, 谢小明等等
+        </p>
+        <p class="info"><strong>网易云/微博</strong> : DL.明</p>
+      </div>
+    </div>
+    <div class="other">
+      <div class="about-me">
+        <h2>关于我的故事：</h2>
+        <p>
+          大家好，我是DL.明，隶属于抖音顶流社的主播团队。我是一个搞笑男，所以我更喜欢用幽默和真诚与大家互动，分享有趣的直播内容和生活点滴。无论是游戏竞技、日常闲聊，还是精彩活动，我都希望通过直播带给大家欢乐和温暖。感谢每一位支持我的粉丝，你们是我前进的动力！期待在直播间和你们相见，继续创造更多美好回忆！
+        </p>
+      </div>
+      <div class="skills">
+        <h2>特长 :</h2>
+        <ul class="skill">
+          <li>说唱</li>
+          <li>唱歌</li>
+          <li>搞笑</li>
+          <li>游戏</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="honours">
+      <h2>明的荣誉</h2>
+      <ul class="honour">
+        <li>造梦师S1巅峰赛第四名</li>
+        <li>抖音2024盛夏宠粉季十万粉十强</li>
+        <li>抖音2024金秋地区赛上海十强</li>
+        <li>抖音2024年年度嘉年华江北第二</li>
+        <li>抖音2024年年度嘉年华重庆第二</li>
+        <li>抖音2025年度家乡荣耀季渝北第一</li>
+        <li>造梦师Dream大乱斗第三季第十四</li>
+      </ul>
+      <p>未完待续</p>
+    </div>
+
+    <div class="kunbear-icon">🐻</div>
+  </body>
+  <footer>
+    <h5>更多关于我的故事 :</h5>
+    <a
+      href="https://www.douyin.com/user/MS4wLjABAAAAD0F67hqqXVuvTi_S_wUeo602xYtX3zyoKqHZdAD9w1FIKJ_Df35hQ8ibG8dnWoDQ"
+      >我的主页</a
+    >
+    <a href="https://m.weibo.cn/u/7974360616?t=0&luicode=10000011&lfid=231583"
+      >微博</a
+    >
+    <a
+      href="https://m.weibo.cn/p/index?containerid=10080822360fbe73d9d00c8847859a83816acb&luicode=10000011&lfid=231583"
+      >超话</a
+    >
+    <a
+      href="https://space.bilibili.com/3546572027595004?spm_id_from=333.337.0.0"
+      >哔哩哔哩</a
+    >
+  </footer>
 </html>

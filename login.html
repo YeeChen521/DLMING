@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'ZCOOL KuaiLe', cursive;
+  }
+
+  body {
+    background: linear-gradient(to bottom, #d0f0ff, #ffffff);
+    color: #333;
+    padding: 30px 20px;
+    min-height: 100vh;
+  }
+
+  nav.navigation {
+    background-color: #e3f6ff;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+  }
+
+  nav.navigation a {
+    text-decoration: none;
+    color: #2d5b8a;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 6px 10px;
+    border-radius: 8px;
+  }
+
+  nav.navigation a:hover {
+    background-color: #b6e6fa;
+    color: #000;
+  }
+
+  h2, h1 {
+    text-align: center;
+    color: #2d5b8a;
+    margin-bottom: 20px;
+  }
+
+  dialog {
+    border: none;
+    border-radius: 16px;
+    padding: 20px 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 90%;
+    margin: auto;
+    background: #fff;
+  }
+
+  .login button,
+  form button,
+  #continue {
+    margin: 10px 5px 0 0;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #aadcee;
+    color: #2d5b8a;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+
+  .login button:hover,
+  form button:hover,
+  #continue:hover {
+    background-color: #83d0f4;
+  }
+
+  label {
+    display: block;
+    margin: 12px 0 4px;
+  }
+
+  input[type="text"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #aadcee;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    margin-right: 6px;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  .fanDialog, .mingDialog {
+    margin-top: 40px;
+  }
+
+  .fanDialog h1 {
+    margin-bottom: 5px;
+  }
+
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  /* 小困熊角标 */
+  body::after {
+    content: "🐻";
+    position: fixed;
+    bottom: 20px;
+    right: 24px;
+    font-size: 2.5rem;
+    opacity: 0.7;
+    z-index: 999;
+  }
+
+  @media (max-width: 600px) {
+    nav.navigation {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    dialog {
+      padding: 15px 20px;
+    }
+  }
+</style>
+
+    </style>
+  </head>
+  <body>
+    <div class="login">
+      <dialog class="loginDialog">
+        <p>请选择你的身份：</p>
+        <button id="bear" onclick="forFan()">小困熊</button>
+        <button id="streamer" onclick="forMing()">DL.明</button>
+      </dialog>
+    </div>
+
+    <div class="fan">
+      <dialog class="fanDialog" id="fanIntro">
+        <h1>快问快答</h1>
+        <h6>只有答对4题以上才可进入哦</h6>
+        <button id="continue">继续</button>
+      </dialog>
+
+      <dialog class="fanDialog" id="fanQuestion">
+        <form method="dialog">
+          <label for="F1">1.请问DL.明的生日是什么时候呢？ (格式 MM-DD)</label>
+          <input
+            type="text"
+            name="F1"
+            id="F1"
+            placeholder="请输入"
+            pattern="\d{2}-\d{2}"
+            required
+          />
+
+          <p>2.请问下面那个是DL.明的原创歌曲呢？ （多选题）</p>
+          <label><input type="checkbox" name="song" value="暴雨天收件人" /> 暴雨天收件人</label><br />
+          <label><input type="checkbox" name="song" value="Coco" /> Coco</label><br />
+          <label><input type="checkbox" name="song" value="歌礼" /> 歌礼</label><br />
+          <label><input type="checkbox" name="song" value="百分百的爱" /> 百分百的爱</label><br />
+          <label><input type="checkbox" name="song" value="暴风雨收件人" /> 暴风雨收件人</label><br />
+
+          <label for="F3">3.请问DL.明的官方动物塑是什么？</label>
+          <select id="F3" name="F3" required>
+            <option value="">---请选择----</option>
+            <option value="鸭子">鸭子</option>
+            <option value="刚子">刚子</option>
+            <option value="小猪">小猪</option></select
+          ><br />
+
+          <label for="F4"
+            >4.
+            请问DL.明在下列那个地点说过“感情才是这个世界上最残忍的东西”这句话呢？</label
+          >
+          <select id="F4" name="F4" required>
+            <option value="">---请选择----</option>
+            <option value="酒店房间">酒店房间</option>
+            <option value="上海迪士尼">上海迪士尼</option>
+            <option value="密室">密室</option>
+            <option value="ktv">ktv</option></select
+          ><br />
+
+          <label for="F5">5. 请问DL.明的别在3D皮套的头发上的物件是什么？</label>
+          <select id="F5" name="F5" required>
+            <option value="">---请选择----</option>
+            <option value="小熊">小熊</option>
+            <option value="帝王蟹">帝王蟹</option>
+            <option value="鸭子">鸭子</option>
+            <option value="玫瑰花">玫瑰花</option></select
+          ><br />
+
+          <button type="submit" id="fanSubmit">提交</button>
+        </form>
+      </dialog>
+
+
+    </div>
+
+    <div class="ming">
+      <dialog class="mingDialog">
+        <form method="dialog">
+          <p>1. DL.明身高是不是2.1m?</p>
+          <label> <input type="radio" name="q1" value="yes" /> 是 </label>
+          <label> <input type="radio" name="q1" value="no" /> 不是 </label>
+
+          <p>2.DL.明是不是最宠小困熊的人？</p>
+          <label> <input type="radio" name="q2" value="yes" /> 是 </label>
+          <label> <input type="radio" name="q2" value="no" /> 不是 </label>
+
+          <p>3. DL.明是不是超棒的</p>
+          <label> <input type="radio" name="q3" value="yes" /> 是 </label>
+          <label> <input type="radio" name="q3" value="no" /> 不是 </label>
+
+          <p>4. DL明是不是最好的小鸭子</p>
+          <label> <input type="radio" name="q4" value="yes" /> 是 </label>
+          <label> <input type="radio" name="q4" value="no" /> 不是 </label>
+
+          <p>5. DL.明和小困熊一定会天天见的是吗？</p>
+          <label> <input type="radio" name="q5" value="yes" /> 是 </label>
+          <label> <input type="radio" name="q5" value="no" /> 不是 </label
+          ><br />
+
+          <button type="submit" id="mingSubmit">提交</button>
+        </form>
+      </dialog>
+
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-auth-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyA8PhigBv9x4vKZEeWoG2kod60r33_WuEI",
+        authDomain: "ming-c76e4.firebaseapp.com",
+        projectId: "ming-c76e4",
+        storageBucket: "ming-c76e4.appspot.com",
+        messagingSenderId: "614393927191",
+        appId: "1:614393927191:web:1645910ae7995979526e52",
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const loginDialog = document.querySelector(".loginDialog");
+      const bear = document.getElementById("bear");
+      const ming = document.getElementById("streamer");
+      const fanSubmit = document.getElementById("fanSubmit");
+
+      window.onload = () => {
+        loginDialog.showModal();
+      };
+
+      function forFan() {
+        const fanIntro = document.querySelector("#fanIntro");
+        fanIntro.showModal();
+
+        const continuebtn = document.getElementById("continue");
+        continuebtn.addEventListener("click", () => {
+          const fanQuetion = document.querySelector("#fanQuestion");
+          fanQuetion.showModal();
+        });
+      }
+
+      const mingSubmit = document.getElementById("mingSubmit");
+
+      function forMing() {
+        const mingDialog = document.querySelector(".mingDialog");
+        mingDialog.showModal();
+      }
+
+      bear.addEventListener("click", () => {
+        loginDialog.close();
+          forFan()
+      });
+      ming.addEventListener("click", () => {
+        loginDialog.close();
+          forMing()
+      });
+
+      fanSubmit.addEventListener("click", (e) => {
+        e.preventDefault();
+        let correctQ = 0;
+
+        const F1 = document.getElementById("F1").value;
+        if (F1 === "06-30") {
+          correctQ++;
+        }
+
+        const OriginalSongs = Array.from(
+          document.querySelectorAll('input[name="song"]:checked')
+        ).map((cb) => cb.value);
+        const correctedSong = ["暴风雨收件人", "百分百的爱"];
+        const isCorrect =
+          OriginalSongs.length === correctedSong.length &&
+          correctedSong.every((song) => OriginalSongs.includes(song));
+        if (isCorrect) correctQ++;
+
+        const F3 = document.getElementById("F3").value;
+        if (F3 === "鸭子") correctQ++;
+
+        const F4 = document.getElementById("F4").value;
+        if (F4 === "密室") correctQ++;
+
+        const F5 = document.getElementById("F5").value;
+        if (F5=== "鸭子")correctQ++;
+
+        if (correctQ >= 4) {
+
+          firebase
+            .auth()
+            .signInAnonymously()
+            .then(() => {
+              sessionStorage.setItem("identity", "fan");
+              window.location.href = "index.html";
+            })
+            .catch((error) => {
+              console.error("登录失败", error);
+              alert("登录失败，请稍后重试！");
+            });
+        } else {
+          alert("至少答对四题才能进入留言墙哦！");
+        }
+      });
+
+      mingSubmit.addEventListener("click", (e) => {
+        let correctM = 0;
+        e.preventDefault();
+
+        const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+        if (q1 === "yes") correctM++;
+
+        const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+        if (q2 === "yes") correctM++;
+
+        const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+        if (q3 === "yes") correctM++;
+
+        const q4 = document.querySelector('input[name="q4"]:checked')?.value;
+        if (q4 === "yes") correctM++;
+
+        const q5 = document.querySelector('input[name="q5"]:checked')?.value;
+        if (q5 === "yes") correctM++;
+
+        if (correctM >= 4) {
+;
+          firebase
+            .auth()
+            .signInAnonymously()
+            .then(() => {
+              sessionStorage.setItem("identity", "ming");
+              window.location.href = "index.html";
+            })
+            .catch((error) => {
+              console.error("登录失败", error);
+              alert("登录失败，请稍后重试！");
+            });
+        } else {
+          alert("至少答对四题才能进入留言墙哦！");
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,296 +1,353 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>DL.明</title>
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DL.明</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap"
+      rel="stylesheet"
+    />
 
-        <style>
-            /* 全局 */
-            * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            }
+    <style>
+      /* 全局 */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-            body.timeline {
-            font-family: 'Noto Sans SC', 'ZCOOL KuaiLe', sans-serif;
-            background: linear-gradient(to bottom, #D0F0FF, #ffffff);
-            color: #333;
-            position: relative;
-            }
+      body.timeline {
+        font-family: "Noto Sans SC", "ZCOOL KuaiLe", sans-serif;
+        background: linear-gradient(to bottom, #d0f0ff, #ffffff);
+        color: #333;
+        position: relative;
+      }
 
-            /* 导航栏 */
-            nav.navigation {
-            width: 100%;
-            background-color: #e3f6ff;
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            padding: 16px 0;            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            }
+      /* 导航栏 */
+      nav.navigation {
+        width: 100%;
+        background-color: #e3f6ff;
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        padding: 16px 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
 
-            nav.navigation a {
-            text-decoration: none;
-            font-weight: bold;
-            color: #2D5B8A;
-            font-size: 1rem;
-            padding: 6px 10px;
-            border-radius: 8px;
-            }
+      nav.navigation a {
+        text-decoration: none;
+        font-weight: bold;
+        color: #2d5b8a;
+        font-size: 1rem;
+        padding: 6px 10px;
+        border-radius: 8px;
+      }
 
-            nav.navigation a:hover {
-            background-color: #b6e6fa;
-            color: #000;
-            }
+      nav.navigation a:hover {
+        background-color: #b6e6fa;
+        color: #000;
+      }
 
-            /* 时间线容器 */
-            .timeline {
-            position: relative;
-            max-width: 1200px;
-            margin: 60px auto 100px;
-            padding: 0 40px；
-            }
+      /* 时间线容器 */
+      .timeline {
+        position: relative;
+        max-width: 1200px;
+        margin: 60px auto 100px;
+        padding: 0 40px；;
+      }
 
-            /* 中轴线 */
-            .timeline::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            height: 100%; /* ✅ 改掉 bottom: 0 */
-            width: 4px;
-            background-color: #aadcee;
-            left: 50%;
-            margin-left: -2px;
-            }
+      /* 中轴线 */
+      .timeline::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        height: 100%; /* ✅ 改掉 bottom: 0 */
+        width: 4px;
+        background-color: #aadcee;
+        left: 50%;
+        margin-left: -2px;
+      }
 
+      /* 时间点 */
+      .timeline-item {
+        padding: 20px 30px;
+        position: relative;
+        width: 50%;
+      }
 
-            /* 时间点 */
-            .timeline-item {
-            padding: 20px 30px;
-            position: relative;
-            width: 50%;
-            }
+      .timeline-item .date {
+        font-weight: bold;
+        color: #2d5b8a;
+        margin-bottom: 10px;
+        font-size: 1.2rem;
+      }
 
-            .timeline-item .date {
-            font-weight: bold;
-            color: #2D5B8A;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-            }
+      .timeline-item.left {
+        left: 0;
+      }
 
-            .timeline-item.left {
-            left: 0;
-            }
+      .timeline-item.right {
+        left: 50%;
+      }
 
-            .timeline-item.right {
-            left: 50%;
-            }
+      /* 卡片样式 */
+      .timeline-item .content {
+        background: white;
+        border-radius: 20px;
+        padding: 20px 25px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+        position: relative;
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+        transition: transform 0.3s ease;
+      }
 
-            /* 卡片样式 */
-            .timeline-item .content {
-            background: white;
-            border-radius: 20px;
-            padding: 20px 25px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
-            position: relative;
-            -webkit-backdrop-filter: blur(6px);
-            backdrop-filter: blur(6px);
-            transition: transform 0.3s ease;
-            }
+      .timeline-item .content:hover {
+        transform: translateY(-2px);
+      }
 
-            .timeline-item .content:hover {
-            transform: translateY(-2px);
-            }
+      /* 时间点圆点 */
+      .timeline-item::before {
+        content: "🐻";
+        position: absolute;
+        top: 20px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 28px;
+        font-size: 18px;
+        background: white;
+        box-shadow: 0 0 0 4px #aadcee;
+        z-index: 10;
+      }
 
-            /* 时间点圆点 */
-            .timeline-item::before {
-            content: "🐻";
-            position: absolute;
-            top: 20px;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 28px;
-            font-size: 18px;
-            background: white;
-            box-shadow: 0 0 0 4px #aadcee;
-            z-index: 10;
-            }
+      .timeline-item.left::before {
+        right: -14px;
+      }
 
-            .timeline-item.left::before {
-            right: -14px;
-            }
+      .timeline-item.right::before {
+        left: -14px;
+      }
 
-            .timeline-item.right::before {
-            left: -14px;
-            }
+      .kunbear-icon {
+        position: fixed;
+        bottom: 20px;
+        right: 24px;
+        font-size: 2.5rem;
+        opacity: 0.75;
+        z-index: 9999;
+        pointer-events: none; /* 不会挡住鼠标操作 */
+      }
 
-            .kunbear-icon {
-                position: fixed;
-                bottom: 20px;
-                right: 24px;
-                font-size: 2.5rem;
-                opacity: 0.75;
-                z-index: 9999;
-                pointer-events: none; /* 不会挡住鼠标操作 */
-            }
+      /* 页脚 */
+      footer {
+        position: relative;
+        width: 100%;
+        text-align: center;
+        background-color: #aedff7;
+        color: #fff;
+        padding: 30px 20px;
+        font-family: "ZCOOL KuaiLe", cursive;
+        margin-top: 60px;
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+        z-index: 999;
+      }
 
-            /* 页脚 */
-            footer {
-            position:relative;
-            width: 100%;
-            text-align: center;
-            background-color: #AEDFF7;
-            color: #fff;
-            padding: 30px 20px;
-            font-family: 'ZCOOL KuaiLe', cursive;
-            margin-top: 60px;
-            box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
-            z-index: 999;
-            }
+      footer a {
+        color: #fff;
+        text-decoration: underline;
+        font-weight: bold;
+      }
 
-            footer a {
-            color: #fff;
-            text-decoration: underline;
-            font-weight: bold;
-            }
+      /* 响应式 */
+      @media (max-width: 768px) {
+        .timeline::after {
+          left: 20px;
+        }
 
-            /* 响应式 */
-            @media (max-width: 768px) {
-            .timeline::after {
-                left: 20px;
-            }
+        .timeline-item {
+          width: 100%;
+          padding-left: 60px;
+          padding-right: 20px;
+        }
 
-            .timeline-item {
-                width: 100%;
-                padding-left: 60px;
-                padding-right: 20px;
-            }
+        .timeline-item.right,
+        .timeline-item.left {
+          left: 0;
+        }
 
-            .timeline-item.right,
-            .timeline-item.left {
-                left: 0;
-            }
+        .timeline-item::before {
+          left: 15px;
+        }
+      }
+    </style>
+  </head>
 
-            .timeline-item::before {
-                left: 15px;
-            }
-            }
-
-        </style>
-    </head>
-    
-    <body class="timeline">
-        <nav class="navigation">
-            <a href="index.html">主页</a>
-            <a href="information.html">介绍</a>
-            <a href="timeline.html">生涯</a>
-            <a href="fan-wall.html">留言墙</a>
-        </nav>
-        <div class="timeline">
-            <div class="timeline-item left">
-                <div class="content">
-                    <div class="date">2022.8.24</div>
-                    开启在抖音直播生涯的第一天啦
-                </div>
-            </div>
-
-            <div class="timeline-item right">
-                <div class="content">
-                    <div class="date">2022.11.8</div>
-                    直播100天快乐
-                    有个鸭子在今天哭鼻子了，但我不说是谁🤭
-                </div>
-            </div>
-            
-            <div class="timeline-item left">
-                <div class="content">
-                    <div class="date">2023.6.30</div>
-                    今天是你第一次和大家一起过生日哦
-                    生日快乐
-                </div>
-            </div>
-
-            <div class="timeline-item right">
-                <div class="content">
-                    <div class="date">2023.6.30</div>
-                    "谢谢你"正式上线啦
-                    这是你来抖音后第一首发布的歌
-                </div>
-            </div>
-
-            <div class="timeline-item left">
-                <div class="content">
-                    <div class="date">2023.8.14</div>
-                    今天是你在抖音直播的一周年啦，辛苦了哦明明酱
-                </div>
-            </div>
-
-            <div class="timeline-item right">
-                <div class="content">
-                    <div class="date">2023.12.19</div>
-                    白月光宝宝出生啦
-                </div>
-            </div>
-
-            <div class="timeline-item left">
-                <div class="content">
-                    <div class="date">2024.5.20</div>
-                    “百分百的爱”上线啦
-                </div>
-            </div>
-
-            <div class="timeline-item left">
-                <div class="content">
-                    <div class="date">2024.6.30</div>
-                    今天是你第二次和大家一起过生日哦
-                    生日快乐
-                </div>
-            </div>
-
-            <div class="timeline-item right">
-                <div class="content">
-                    <div class="date">2024.8.14</div>
-                    今天是你在抖音直播的两周年啦，辛苦了哦明明酱
-                </div>
-            </div>
-
-            <div class="timeline-item right">
-                <div class="content">
-                    <div class="date">2025.5.10</div>
-                    明和小困熊们已经互相陪伴1000天了
-                </div>
-            </div>
-
-            <div class="timeline-item left">
-                <div class="content">
-                    <div class="date">2025.5.20</div>
-                    "暴风雨收件人"上线啦
-                </div>
-            </div>            
-            
-            <div class="timeline-item left">
-                <div class="content">
-                    <div class="date">2025.6.30</div>
-                    今天是你第三次和大家一起过生日哦
-                    生日快乐
-                </div>
-            </div>
-
+  <body class="timeline">
+    <nav class="navigation">
+      <a href="index.html">主页</a>
+      <a href="information.html">介绍</a>
+      <a href="timeline.html">生涯</a>
+      <a href="fan-wall.html">留言墙</a>
+    </nav>
+    <div class="timeline">
+      <div class="timeline-item left">
+        <div class="content">
+          <div class="date">2022.8.24</div>
+          开启在抖音直播生涯的第一天啦
         </div>
+      </div>
+
+      <div class="timeline-item left">
+        <div class="content">
+          <div class="date">2022.9.10</div>
+          救命组合正式成立啦
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="content">
+          <div class="date">2022.11.8</div>
+          直播100天快乐 有个鸭子在今天哭鼻子了，但我不说是谁🤭
+        </div>
+      </div>
+
+      <div class="timeline-item left">
+        <div class="content">
+          <div class="date">2023.6.30</div>
+          今天是你第一次和大家一起过生日哦 生日快乐
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="content">
+          <div class="date">2023.6.30</div>
+          "谢谢你"正式上线啦 这是你来抖音后第一首发布的歌
+        </div>
+      </div>
+
+      <div class="timeline-item left">
+        <div class="content">
+          <div class="date">2023.8.14</div>
+          今天是你在抖音直播的一周年啦，辛苦了哦明明酱
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="content">
+          <div class="date">2023.9.10</div>
+          “往前行”上线啦 恭喜救命一周年快乐
+        </div>
+      </div>
+
+      <div class="timeline-item left">
+        <div class="content">
+          <div class="date">2023.12.19</div>
+          白月光宝宝出生啦 你从图片走到2d了
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="content">
+          <div class="date">2024.1.24</div>
+          今天是你在抖音直播的第520天啦
+        </div>
+      </div>
+
+      <div class="timeline-item left">
+        <div class="content">
+          <div class="date">2024.5.13</div>
+          因为有你，所以所有和63有关的数字都被赋予了特别的意义 直播630天快乐
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="content">
+          <div class="date">2024.5.20</div>
+          “百分百的爱”上线啦
+        </div>
+      </div>
+
+      <div class="timeline-item left">
+        <div class="content">
+          <div class="date">2024.6.30</div>
+          今天是你第二次和大家一起过生日哦 生日快乐
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="content">
+          <div class="date">2024.8.14</div>
+          今天是你在抖音直播的两周年啦，辛苦了哦明明酱
+        </div>
+      </div>
+
+      <div class="timeline-item left">
+        <div class="content">
+          <div class="date">2024.9.10</div>
+          恭喜救命两周年快乐
+        </div>
+      </div>
+
+      <div class="timeline-item left">
+        <div class="content">
+          <div class="date">2024.10.1</div>
+          “你在就好”上线啦
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="content">
+          <div class="date">2024.11.3</div>
+          “歌里”上线啦
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="content">
+          <div class="date">2025.5.10</div>
+          明和小困熊们已经互相陪伴1000天了
+        </div>
+      </div>
+
+      <div class="timeline-item left">
+        <div class="content">
+          <div class="date">2025.5.20</div>
+          "暴风雨收件人"上线啦
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="content">
+          <div class="date">2025.6.30</div>
+          今天是你第三次和大家一起过生日哦 生日快乐
+        </div>
+      </div>
+    </div>
+
     <div class="kunbear-icon">🐻</div>
     <footer>
-        <h5>更多关于我的故事 : </h5>
-        <a href="https://www.douyin.com/user/MS4wLjABAAAAD0F67hqqXVuvTi_S_wUeo602xYtX3zyoKqHZdAD9w1FIKJ_Df35hQ8ibG8dnWoDQ">我的主页</a>
-        <a href="https://m.weibo.cn/u/7974360616?t=0&luicode=10000011&lfid=231583">微博</a>
-        <a href="https://m.weibo.cn/p/index?containerid=10080822360fbe73d9d00c8847859a83816acb&luicode=10000011&lfid=231583">D超话</a>
+      <h5>更多关于我的故事 :</h5>
+      <a
+        href="https://www.douyin.com/user/MS4wLjABAAAAD0F67hqqXVuvTi_S_wUeo602xYtX3zyoKqHZdAD9w1FIKJ_Df35hQ8ibG8dnWoDQ"
+        >我的主页</a
+      >
+      <a href="https://m.weibo.cn/u/7974360616?t=0&luicode=10000011&lfid=231583"
+        >微博</a
+      >
+      <a
+        href="https://m.weibo.cn/p/index?containerid=10080822360fbe73d9d00c8847859a83816acb&luicode=10000011&lfid=231583"
+        >超话</a
+      >
+      <a
+        href="https://space.bilibili.com/3546572027595004?spm_id_from=333.337.0.0"
+        >哔哩哔哩</a
+      >
     </footer>
-    </body>
-    
+  </body>
 </html>
