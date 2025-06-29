@@ -329,7 +329,7 @@
             })
             .catch((error) => {
               console.error("登录失败", error);
-              alert("登录失败，请稍后重试！");
+              alert("登录失败：" + error.code + "\n" + error.message)
             });
         } else {
           alert("至少答对四题才能进入留言墙哦！");
@@ -366,7 +366,7 @@
             })
             .catch((error) => {
               console.error("登录失败", error);
-              alert("登录失败，请稍后重试！");
+              alert("登录失败：" + error.code + "\n" + error.message)
             });
         } else {
           alert("至少答对四题才能进入留言墙哦！");
