@@ -93,6 +93,33 @@
         color: #2d5b8a;
       }
 
+      .avatar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .audio-message {
+        font-size: 1rem;
+        color: #2d5b8a;
+        background-color: #e3f6ff;
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-weight: bold;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .audio-message:hover {
+        background-color: #c4ecff;
+      }
+
+      #myAudio {
+        display: none;
+      }
+
       .other {
         max-width: 900px;
         margin: 30px auto;
@@ -202,12 +229,25 @@
       <a href="main.html">主页</a>
       <a href="information.html">介绍</a>
       <a href="timeline.html">生涯</a>
+      <a href="song.html">小曲库</a>
       <a href="fan-wall.html">留言墙</a>
     </nav>
     <div class="postcard">
       <div class="avatar">
         <img src="gallery/avatar.jpg" alt="大头照" />
+        <div
+          class="audio-message"
+          style="cursor: pointer; color: blue; text-decoration: underline"
+        >
+          🔊 点击播放音频
+        </div>
+
+        <audio id="myAudio">
+          <source src="6月29日 (1).MP3" type="audio/MP3" />
+          Your browser don't support the audio.
+        </audio>
       </div>
+
       <div class="personal-info">
         <p class="info"><strong>姓名</strong> : DL.明</p>
         <p class="info"><strong>年龄</strong> : 2007 / 06 / 30 (自认为00后)</p>
@@ -254,6 +294,15 @@
     </div>
 
     <div class="kunbear-icon">🐻</div>
+
+    <script>
+      const audioDiv = document.querySelector(".audio-message");
+      const audio = document.getElementById("myAudio");
+
+      audioDiv.addEventListener("click", () => {
+        audio.play();
+      });
+    </script>
   </body>
   <footer>
     <h5>更多关于我的故事 :</h5>

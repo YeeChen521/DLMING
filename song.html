@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>歌单</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Noto Sans SC", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(to bottom, #d0f0ff, #ffffff);
+        color: #333;
+        padding: 20px;
+        min-height: 100vh;
+      }
+
+      nav.navigation {
+        background-color: #e3f6ff;
+        padding: 16px;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+      }
+
+      nav.navigation a {
+        text-decoration: none;
+        color: #2d5b8a;
+        font-weight: bold;
+        font-size: 1rem;
+        padding: 6px 12px;
+        border-radius: 8px;
+      }
+
+      nav.navigation a:hover {
+        background-color: #b6e6fa;
+        color: #000;
+      }
+
+      h2 {
+        text-align: center;
+        color: #2d5b8a;
+        margin-bottom: 20px;
+      }
+
+      /* 推荐与搜索区域 */
+      .recommend-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        max-width: 800px;
+        margin: 0 auto 20px;
+        flex-wrap: wrap;
+      }
+
+      #search {
+        flex: 1;
+        padding: 10px 14px;
+        border: 1px solid #aadcee;
+        border-radius: 10px;
+        font-size: 1rem;
+        min-width: 200px;
+      }
+
+      #todaypick {
+        background-color: #ffdb90;
+        color: #5b4216;
+        font-weight: bold;
+        border-radius: 10px;
+        border: none;
+        padding: 10px 18px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        white-space: nowrap;
+      }
+
+      #todaypick:hover {
+        background-color: #ffc957;
+      }
+
+      /* 推荐关闭按钮 */
+      #closepick {
+        display: block;
+        margin: 0 auto 20px;
+      }
+
+      /* 歌曲展示 */
+      #result {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+        padding: 0 10px;
+      }
+
+      #result > div {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 18px 20px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        line-height: 1.7;
+        transition: transform 0.2s ease;
+        border: 1px solid #d9f0f9;
+      }
+
+      #result > div:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      }
+
+      #result strong {
+        font-size: 1.2rem;
+        display: block;
+        margin-bottom: 6px;
+        color: #1c3c57;
+      }
+
+      #result hr {
+        margin-top: 14px;
+        border: 0;
+        border-top: 1px dashed #b5cfd9;
+      }
+
+      /* 通用按钮样式 */
+      button {
+        padding: 10px 14px;
+        margin: 10px 5px;
+        border: none;
+        border-radius: 10px;
+        background-color: #aadcee;
+        color: #2d5b8a;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #83d0f4;
+      }
+
+      /* 分页区域 */
+      #pagination {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+        gap: 10px;
+      }
+
+      #custompage {
+        padding: 8px;
+        width: 100px;
+        border: 1px solid #aadcee;
+        border-radius: 8px;
+      }
+
+      #pageInfo {
+        font-weight: bold;
+        color: #2d5b8a;
+      }
+
+      /* footer */
+      footer {
+        background-color: #aedff7;
+        text-align: center;
+        padding: 20px;
+        font-family: "ZCOOL KuaiLe", cursive;
+        color: #fff;
+        margin-top: 40px;
+      }
+
+      footer a {
+        color: #fff;
+        margin: 0 10px;
+        text-decoration: underline;
+        font-weight: bold;
+      }
+
+      /* icon */
+      .kunbear-icon {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        font-size: 2.5rem;
+        opacity: 0.75;
+        z-index: 1000;
+      }
+
+      /* 响应式 */
+      @media (max-width: 600px) {
+        .recommend-wrapper {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        #todaypick {
+          width: 100%;
+          margin-top: 10px;
+        }
+
+        nav.navigation {
+          flex-direction: column;
+        }
+
+        #pagination {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navigation">
+      <a href="main.html">主页</a>
+      <a href="information.html">介绍</a>
+      <a href="timeline.html">生涯</a>
+      <a href="song.html">小曲库</a>
+      <a href="fan-wall.html">留言墙</a>
+    </nav>
+
+    <h2>明の小曲库</h2>
+    <div class="recommend-wrapper">
+      <input type="text" id="search" placeholder="搜素歌名，原唱或者风格" />
+      <button id="todaypick">🎵 今日推荐</button>
+    </div>
+    <button id="closepick" style="display: none">关闭推荐</button>
+    <div id="result"></div>
+    <div id="pagination">
+      <button id="prevPage">上一页</button>
+      <span id="pageInfo"></span>
+      <input type="text" id="custompage" placeholder="输入页数" />
+      <button id="goPage">跳转</button>
+      <button id="nextPage">下一页</button>
+    </div>
+
+    <div class="kunbear-icon">🐻</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+      let song = [];
+      let currentPage = 1;
+      const pageSize = 50;
+      const resultBox = document.getElementById("result");
+      const todaypick = document.getElementById("todaypick");
+      const closepick = document.getElementById("closepick");
+      todaypick.disabled = true;
+
+      const prevBtn = document.getElementById("prevPage");
+      const nextBtn = document.getElementById("nextPage");
+      const pageInfo = document.getElementById("pageInfo");
+      const custompage = document.getElementById("custompage");
+      const goPage = document.getElementById("goPage");
+
+      function showPage(arr, page) {
+        resultBox.innerHTML = "";
+
+        const start = (page - 1) * pageSize;
+        const end = start + pageSize;
+        const pageData = arr.slice(start, end);
+
+        pageData.forEach((song) => {
+          const sdiv = document.createElement("div");
+          sdiv.innerHTML = `
+                <strong>${song.歌名}</strong><br />
+                原唱：${song.原唱} <br />
+                风格：${song.风格}
+                <hr />
+            `;
+          resultBox.appendChild(sdiv);
+        });
+
+        pageInfo.textContent = `第 ${page} 页 / 共 ${Math.ceil(arr.length / pageSize)} 页`;
+        prevBtn.disabled = page <= 1;
+        nextBtn.disabled = end >= arr.length;
+      }
+
+      prevBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+          currentPage--;
+          showPage(song, currentPage);
+        }
+      });
+
+      nextBtn.addEventListener("click", () => {
+        if (currentPage * pageSize < song.length) {
+          currentPage++;
+          showPage(song, currentPage);
+        }
+      });
+
+      goPage.addEventListener("click", () => {
+        const input = custompage.value.trim();
+        const targetPage = parseInt(input, 10);
+        const totalPage = Math.ceil(song.length / pageSize);
+        if (!isNaN(targetPage) && targetPage >= 1 && targetPage <= totalPage) {
+          currentPage = targetPage;
+          showPage(song, currentPage);
+          custompage.value = "";
+        } else {
+          alert(`请输入1到${totalPage}之间的数字`);
+        }
+      });
+
+      function loadExcel() {
+        fetch("song.xlsx")
+          .then((res) => res.arrayBuffer())
+          .then((ab) => {
+            const workbook = XLSX.read(ab, { type: "array" });
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            song = XLSX.utils.sheet_to_json(sheet);
+            showPage(song, currentPage);
+            todaypick.disabled = false;
+          });
+      }
+
+      function searchSongs() {
+        const keyword = document
+          .getElementById("search")
+          .value.trim()
+          .toLowerCase();
+        resultBox.innerHTML = "";
+
+        const filtered = song.filter((song) =>
+          Object.values(song).some((value) =>
+            value.toString().toLowerCase().includes(keyword)
+          )
+        );
+
+        if (filtered.length === 0) {
+          resultBox.innerHTML = "<p>明明酱不会唱这首歌哦<p>";
+          return;
+        }
+
+        filtered.forEach((song) => {
+          const div = document.createElement("div");
+          div.innerHTML = `
+                <strong>${song.歌名}</strong><br />
+                原唱：${song.原唱} <br />
+                风格：${song.风格}
+                <hr />
+            `;
+          resultBox.appendChild(div);
+        });
+      }
+
+      function recommendSongs(arr) {
+        const shuffle = [...arr].sort(() => 0.5 - Math.random());
+        return shuffle.slice(0, 20);
+      }
+
+      document.getElementById("search").addEventListener("input", searchSongs);
+
+      loadExcel();
+
+      todaypick.addEventListener("click", () => {
+        let rSongs = recommendSongs(song);
+        resultBox.innerHTML = "";
+
+        rSongs.forEach((song) => {
+          const rdiv = document.createElement("div");
+          rdiv.innerHTML = `
+                <strong>${song.歌名}</strong><br />
+                原唱：${song.原唱} <br />
+                风格：${song.风格}
+                <hr />
+            `;
+          resultBox.appendChild(rdiv);
+        });
+        closepick.style.display = "inline-block";
+        todaypick.style.display = "none";
+      });
+
+      closepick.addEventListener("click", () => {
+        resultBox.innerHTML = "";
+        closepick.style.display = "none";
+        todaypick.style.display = "inline-block";
+        showPage(song, currentPage);
+      });
+    </script>
+  </body>
+
+  <footer>
+    <h5>更多关于我的故事 :</h5>
+    <a
+      href="https://www.douyin.com/user/MS4wLjABAAAAD0F67hqqXVuvTi_S_wUeo602xYtX3zyoKqHZdAD9w1FIKJ_Df35hQ8ibG8dnWoDQ"
+      >我的主页</a
+    >
+    <a href="https://m.weibo.cn/u/7974360616">微博</a>
+    <a
+      href="https://m.weibo.cn/p/index?containerid=10080822360fbe73d9d00c8847859a83816acb"
+      >超话</a
+    >
+    <a href="https://space.bilibili.com/3546572027595004">哔哩哔哩</a>
+  </footer>
+</html>

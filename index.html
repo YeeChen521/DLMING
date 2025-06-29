@@ -278,8 +278,14 @@
       const mingSubmit = document.getElementById("mingSubmit");
 
       function forMing() {
-        const mingDialog = document.querySelector(".mingDialog");
+        const fanIntro = document.querySelector("#fanIntro");
+        fanIntro.showModal();
+        
+        const continuebtn = document.getElementById("continue");
+        continuebtn.addEventListener("click",() => {
+          const mingDialog = document.querySelector(".mingDialog");
         mingDialog.showModal();
+        })
       }
 
       bear.addEventListener("click", () => {
@@ -332,7 +338,7 @@
               alert("登录失败：" + error.code + "\n" + error.message)
             });
         } else {
-          alert("至少答对四题才能进入留言墙哦！");
+          alert("至少答对四题才能进入小困熊之家哦！");
         }
       });
 
@@ -369,7 +375,7 @@
               alert("登录失败：" + error.code + "\n" + error.message)
             });
         } else {
-          alert("至少答对四题才能进入留言墙哦！");
+          alert("至少答对四题才能进入小困熊之家哦！");
         }
       });
     </script>
