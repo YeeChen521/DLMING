@@ -37,7 +37,6 @@ window.addEventListener("DOMContentLoaded", () => {
     const letterContent = document.getElementById("letterContent");
     const envelopeCover = document.getElementById("envelopeCover");
 
-    // 写信内容
     if (identity === "fan") {
       letterContent.innerHTML = `
         亲爱的小困熊： 🌟💖<br><br>
@@ -62,7 +61,6 @@ window.addEventListener("DOMContentLoaded", () => {
       `;
     }
 
-    // 显示信封封面按钮
     envelopeCover.style.display = "block";
   }
 });

@@ -53,7 +53,6 @@
         margin-bottom: 20px;
       }
 
-      /* 推荐与搜索区域 */
       .recommend-wrapper {
         display: flex;
         justify-content: space-between;
@@ -73,6 +72,31 @@
         min-width: 200px;
       }
 
+      #style {
+        padding: 10px 14px;
+        border: 1px solid #aadcee;
+        border-radius: 10px;
+        font-size: 1rem;
+        min-width: 120px;
+        background-color: #ffffff;
+        color: #2d5b8a;
+      }
+
+      #styleSubmit {
+        background-color: #aadcee;
+        color: #2d5b8a;
+        font-weight: bold;
+        border-radius: 10px;
+        border: none;
+        padding: 10px 18px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      #styleSubmit:hover {
+        background-color: #83d0f4;
+      }
+
       #todaypick {
         background-color: #ffdb90;
         color: #5b4216;
@@ -89,13 +113,11 @@
         background-color: #ffc957;
       }
 
-      /* 推荐关闭按钮 */
       #closepick {
         display: block;
         margin: 0 auto 20px;
       }
 
-      /* 歌曲展示 */
       #result {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -107,11 +129,12 @@
       #result > div {
         background: #ffffff;
         border-radius: 16px;
-        padding: 18px 20px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-        line-height: 1.7;
+        padding: 12px 14px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        line-height: 1.5;
         transition: transform 0.2s ease;
         border: 1px solid #d9f0f9;
+        font-size: 0.95rem;
       }
 
       #result > div:hover {
@@ -132,7 +155,6 @@
         border-top: 1px dashed #b5cfd9;
       }
 
-      /* 通用按钮样式 */
       button {
         padding: 10px 14px;
         margin: 10px 5px;
@@ -149,7 +171,6 @@
         background-color: #83d0f4;
       }
 
-      /* 分页区域 */
       #pagination {
         display: flex;
         flex-wrap: wrap;
@@ -171,7 +192,6 @@
         color: #2d5b8a;
       }
 
-      /* footer */
       footer {
         background-color: #aedff7;
         text-align: center;
@@ -231,7 +251,14 @@
 
     <h2>明の小曲库</h2>
     <div class="recommend-wrapper">
-      <input type="text" id="search" placeholder="搜素歌名，原唱或者风格" />
+      <input type="text" id="search" placeholder="搜素歌名" />
+      <label for="style">风格：</label>
+      <select id="style" name="style">
+        <option value="">---请选择----</option>
+        <option value="流行">流行</option>
+        <option value="说唱">说唱</option>
+      </select>
+      <button id="styleSubmit">搜素</button>
       <button id="todaypick">🎵 今日推荐</button>
     </div>
     <button id="closepick" style="display: none">关闭推荐</button>
@@ -250,7 +277,7 @@
     <script>
       let song = [];
       let currentPage = 1;
-      const pageSize = 50;
+      const pageSize = 48;
       const resultBox = document.getElementById("result");
       const todaypick = document.getElementById("todaypick");
       const closepick = document.getElementById("closepick");
@@ -273,7 +300,6 @@
           const sdiv = document.createElement("div");
           sdiv.innerHTML = `
                 <strong>${song.歌名}</strong><br />
-                原唱：${song.原唱} <br />
                 风格：${song.风格}
                 <hr />
             `;
@@ -346,7 +372,6 @@
           const div = document.createElement("div");
           div.innerHTML = `
                 <strong>${song.歌名}</strong><br />
-                原唱：${song.原唱} <br />
                 风格：${song.风格}
                 <hr />
             `;
@@ -356,7 +381,7 @@
 
       function recommendSongs(arr) {
         const shuffle = [...arr].sort(() => 0.5 - Math.random());
-        return shuffle.slice(0, 20);
+        return shuffle.slice(0, 28);
       }
 
       document.getElementById("search").addEventListener("input", searchSongs);
@@ -371,7 +396,6 @@
           const rdiv = document.createElement("div");
           rdiv.innerHTML = `
                 <strong>${song.歌名}</strong><br />
-                原唱：${song.原唱} <br />
                 风格：${song.风格}
                 <hr />
             `;
@@ -386,6 +410,28 @@
         closepick.style.display = "none";
         todaypick.style.display = "inline-block";
         showPage(song, currentPage);
+      });
+
+      const styleSubmit = document.getElementById("styleSubmit");
+      styleSubmit.addEventListener("click", () => {
+        const styleValue = document.getElementById("style").value;
+        resultBox.innerHTML = "";
+
+        const filtered = song.filter((song) =>
+          Object.values(song).some((value) =>
+            value.toString().toLowerCase().includes(styleValue)
+          )
+        );
+
+        filtered.forEach((song) => {
+          const div = document.createElement("div");
+          div.innerHTML = `
+                <strong>${song.歌名}</strong><br />
+                风格：${song.风格}
+                <hr />
+            `;
+          resultBox.appendChild(div);
+        });
       });
     </script>
   </body>

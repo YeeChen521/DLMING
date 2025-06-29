@@ -1,11 +1,10 @@
-/* Reset */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Fonts */
 body {
   font-family: "Noto Sans SC", "ZCOOL KuaiLe", sans-serif;
   background-color: #d0f0ff; /* 主浅蓝色背景 */
@@ -26,7 +25,6 @@ header.name {
   z-index: 1000;
 }
 
-/* 导航栏 */
 nav.navigation {
   display: flex;
   justify-content: center;
@@ -52,7 +50,6 @@ nav.navigation a:hover {
   color: #000;
 }
 
-/* 画廊区域 */
 .gallery-wrapper {
   overflow: hidden;
   width: 100%;
@@ -242,7 +239,6 @@ button.right {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 
-  /* 👇✨动画加在按钮上✨👇 */
   animation:
     floatUpDown 3s ease-in-out infinite,
     glowFlash 4s ease-in-out infinite;
@@ -254,8 +250,6 @@ button.right {
 }
 
 
-
-/* 响应式优化 */
 @media (max-width: 768px) {
   nav.navigation {
     flex-direction: column;
