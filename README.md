@@ -5,6 +5,12 @@ The site provides fans with information, music, and an interactive **fan wall** 
 
 ---
 
+## 🔗 Live Demo  
+👉 [Check out the website here](https://dlming.vercel.app/)
+(Hosted on Vercel)
+
+---
+
 ## 📌 Pages Overview
 - **index.html** – Landing page / homepage
 - **main.html** – Main navigation hub
